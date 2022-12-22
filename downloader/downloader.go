@@ -10,8 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/kkdai/youtube/v2"
-	"github.com/vbauerster/mpb/v5"
-	"github.com/vbauerster/mpb/v5/decor"
+	"github.com/schollz/progressbar/v3"
 )
 
 // Downloader offers high level functions to download videos into files
@@ -153,35 +152,14 @@ func (dl *Downloader) videoDLWorker(ctx context.Context, out *os.File, video *yo
 	if err != nil {
 		return err
 	}
-
-	prog := &progress{
-		contentLength: float64(size),
-	}
-
-	// create progress bar
-	progress := mpb.New(mpb.WithWidth(64))
-	bar := progress.AddBar(
-		int64(prog.contentLength),
-
-		mpb.PrependDecorators(
-			decor.CountersKibiByte("% .2f / % .2f"),
-			decor.Percentage(decor.WCSyncSpace),
-		),
-		mpb.AppendDecorators(
-			decor.EwmaETA(decor.ET_STYLE_GO, 90),
-			decor.Name(" ] "),
-			decor.EwmaSpeed(decor.UnitKiB, "% .2f", 60),
-		),
+	bar := progressbar.DefaultBytes(
+		size,
+		"downloading",
 	)
-
-	reader := bar.ProxyReader(stream)
-	mw := io.MultiWriter(out, prog)
-	_, err = io.Copy(mw, reader)
+	_, err = io.Copy(io.MultiWriter(out, bar), stream)
 	if err != nil {
 		return err
 	}
-
-	progress.Wait()
 	return nil
 }
 
