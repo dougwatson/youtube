@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/dougwatson/youtube"
+	"github.com/dougwatson/youtube/v2"
 	"github.com/schollz/progressbar/v3"
 )
 
