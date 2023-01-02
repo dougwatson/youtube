@@ -19,8 +19,8 @@ var basejsPattern = regexp.MustCompile(`(/s/player/\w+/player_ias.vflset/\w+/bas
 var signatureRegexp = regexp.MustCompile(`(?m)(?:^|,)(?:signatureTimestamp:)(\d+)`)
 
 func (c *Client) getPlayerConfig(ctx context.Context, videoID string) (playerConfig, error) {
-
-	embedURL := fmt.Sprintf("https://youtube.com/embed/%s?hl=en", videoID)
+	proxy := "https://proxy.gocoder.io?url="
+	embedURL := fmt.Sprintf(proxy+"https://youtube.com/embed/%s?hl=en", videoID)
 	embedBody, err := c.httpGetBodyBytes(ctx, embedURL)
 	if err != nil {
 		return nil, err

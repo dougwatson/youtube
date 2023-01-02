@@ -58,14 +58,14 @@ func (dl *Downloader) logf(format string, v ...interface{}) {
 func main() {
 	ctx := context.Background()
 
-	video, err := testDownloader.Client.GetVideoContext(ctx, "BaW_jenozKc")
+	video, err := testDownloader.Client.GetVideoContext(ctx, "446E-r0rXHI")
 	if err != nil {
 		println("HERE")
 		panic(err)
 	}
 
 	//testDownloader.DownloadComposite(ctx, "", video, "hd1080", "mp4")
-	testDownloader.Download(ctx, video, &video.Formats[0], "")
+	testDownloader.Download(ctx, video, &video.Formats[27], "")
 }
 
 // Download : Starting download video by arguments.

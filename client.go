@@ -161,8 +161,8 @@ func (c *Client) videoDataByInnertube(ctx context.Context, id string, clientInfo
 			},
 		},
 	}
-
-	return c.httpPostBodyBytes(ctx, "https://www.youtube.com/youtubei/v1/player?key="+clientInfo.key, data)
+	proxy := "https://proxy.gocoder.io?url="
+	return c.httpPostBodyBytes(ctx, proxy+"https://www.youtube.com/youtubei/v1/player?key="+clientInfo.key, data)
 }
 
 func prepareInnertubeContext(clientInfo clientInfo) inntertubeContext {
